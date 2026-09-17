@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#f9e5eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <title>You Complete Me</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=Parisienne&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 255, 255, 0.9),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(255, 196, 214, 0.45),
+                    transparent 35%
+                ),
+                #f9e5eb;
+
+            color: #55383f;
+
+            font-family: "Inter", sans-serif;
+
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           OPENING SCREEN
+        ========================= */
+
+        .opening {
+            min-height: 100svh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                max(30px, env(safe-area-inset-top))
+                20px
+                max(30px, env(safe-area-inset-bottom));
+
+            text-align: center;
+
+            transition:
+                opacity 0.9s ease,
+                visibility 0.9s ease;
+        }
+
+        .opening.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .opening-content {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .small-text {
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+
+            color: #9c6875;
+
+            margin-bottom: 20px;
+        }
+
+        .opening h1 {
+            font-family: "Parisienne", cursive;
+
+            font-size: clamp(3.2rem, 12vw, 6.5rem);
+
+            font-weight: 400;
+
+            color: #8d4f60;
+
+            line-height: 1.05;
+
+            margin-bottom: 12px;
+        }
+
+        .opening-heart {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+
+            color: #c66b83;
+
+            margin-bottom: 35px;
+
+            animation: heartbeat 2.2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .continue-button {
+            border: none;
+
+            background: rgba(255, 255, 255, 0.75);
+
+            color: #754652;
+
+            padding: 14px 32px;
+
+            border-radius: 50px;
+
+            font-family: "Inter", sans-serif;
+
+            font-size: 0.85rem;
+
+            letter-spacing: 0.08em;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 30px rgba(126, 69, 83, 0.12);
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-3px);
+
+            background: white;
+
+            box-shadow:
+                0 14px 35px rgba(126, 69, 83, 0.18);
+        }
+
+        .continue-button:active {
+            transform: scale(0.97);
+        }
+
+
+        /* =========================
+           LETTER SECTION
+        ========================= */
+
+        .letter-section {
+            display: none;
+
+            min-height: 100svh;
+
+            padding:
+                max(45px, env(safe-area-inset-top))
+                18px
+                max(50px, env(safe-area-inset-bottom));
+
+            position: relative;
+        }
+
+        .letter-section.show {
+            display: block;
+
+            animation: letterAppear 1.2s ease forwards;
+        }
+
+        @keyframes letterAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================
+           LETTER
+        ========================= */
+
+        .letter {
+            position: relative;
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding:
+                clamp(35px, 6vw, 70px)
+                clamp(22px, 6vw, 75px)
+                clamp(45px, 7vw, 80px);
+
+            background:
+                rgba(255, 250, 251, 0.88);
+
+            border: 1px solid rgba(160, 91, 107, 0.12);
+
+            box-shadow:
+                0 20px 70px rgba(102, 54, 68, 0.13);
+
+            border-radius: 3px;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           FLOWERS
+        ========================= */
+
+        .flower {
+            position: absolute;
+
+            color: rgba(184, 91, 113, 0.25);
+
+            font-size: clamp(2rem, 7vw, 4rem);
+
+            pointer-events: none;
+
+            user-select: none;
+        }
+
+        .flower-1 {
+            top: 18px;
+            left: 20px;
+
+            transform: rotate(-15deg);
+        }
+
+        .flower-2 {
+            top: 25px;
+            right: 22px;
+
+            transform: rotate(20deg);
+        }
+
+        .flower-3 {
+            bottom: 20px;
+            left: 25px;
+
+            transform: rotate(10deg);
+        }
+
+        .flower-4 {
+            bottom: 25px;
+            right: 20px;
+
+            transform: rotate(-20deg);
+        }
+
+
+        /* =========================
+           LETTER HEADER
+        ========================= */
+
+        .letter-top {
+            text-align: center;
+
+            margin-bottom: clamp(35px, 7vw, 55px);
+        }
+
+        .letter-top p {
+            font-family: "Inter", sans-serif;
+
+            font-size: clamp(0.68rem, 2vw, 0.78rem);
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.2em;
+
+            color: #9b6b75;
+
+            margin-bottom: 18px;
+        }
+
+        .line {
+            width: 55px;
+
+            height: 1px;
+
+            background: #c88b9b;
+
+            margin: 0 auto 18px;
+        }
+
+        .letter-top h2 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: clamp(2rem, 7vw, 3.5rem);
+
+            font-weight: 500;
+
+            color: #794a58;
+
+            line-height: 1.1;
+        }
+
+
+        /* =========================
+           LETTER BODY
+        ========================= */
+
+        .letter-body {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: clamp(1.08rem, 2.5vw, 1.35rem);
+
+            line-height: 1.85;
+
+            color: #50373e;
+        }
+
+        .letter-body p {
+            margin-bottom: 1.5em;
+        }
+
+        .letter-body p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           END HEART
+        ========================= */
+
+        .ending {
+            text-align: center;
+
+            margin-top: 45px;
+
+            color: #b06a7d;
+
+            font-size: 1.4rem;
+
+            letter-spacing: 0.15em;
+        }
+
+
+        /* =========================
+           PHONE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .letter {
+                box-shadow:
+                    0 12px 40px rgba(102, 54, 68, 0.11);
+            }
+
+            .letter-body {
+                line-height: 1.75;
+            }
+
+            .flower {
+                opacity: 0.65;
+            }
+
+        }
+
+
+        /* VERY SMALL PHONES */
+
+        @media (max-width: 360px) {
+
+            .opening h1 {
+                font-size: 3rem;
+            }
+
+            .letter {
+                padding:
+                    32px
+                    19px
+                    40px;
+            }
+
+            .letter-body {
+                font-size: 1.03rem;
+            }
+
+            .flower {
+                font-size: 1.8rem;
+            }
+
+        }
+
+
+        /* LANDSCAPE PHONES */
+
+        @media (
+            max-height: 500px
+        ) and (
+            orientation: landscape
+        ) {
+
+            .opening {
+                padding-top: 25px;
+                padding-bottom: 25px;
+            }
+
+            .opening h1 {
+                font-size: 3rem;
+            }
+
+            .opening-heart {
+                margin-bottom: 20px;
+            }
+
+            .letter-section {
+                padding-top: 25px;
+            }
+
+        }
+
+
+        /* REDUCED MOTION */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         OPENING
+    ========================= -->
+
+    <main
+        class="opening"
+        id="opening"
+    >
+
+        <div class="opening-content">
+
+            <div class="small-text">
+                A little something for you
+            </div>
+
+            <h1>
+                You complete me.
+            </h1>
+
+            <div class="opening-heart">
+                ♡
+            </div>
+
+            <button
+                class="continue-button"
+                id="continueButton"
+            >
+                Continue
+            </button>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         LETTER
+    ========================= -->
+
+    <section
+        class="letter-section"
+        id="letterSection"
+    >
+
+        <article class="letter">
+
+
+            <!-- Decorative flowers -->
+
+            <div class="flower flower-1">
+                ✿
+            </div>
+
+            <div class="flower flower-2">
+                ❀
+            </div>
+
+            <div class="flower flower-3">
+                ✾
+            </div>
+
+            <div class="flower flower-4">
+                ❁
+            </div>
+
+
+            <!-- Letter heading -->
+
+            <header class="letter-top">
+
+                <p>
+                    A random letter for you
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    You Complete Me
+                </h2>
+
+            </header>
+
+
+
+            <!-- Letter -->
+
+            <div class="letter-body">
+
+                <p>
+                    From the very first day I knew you were someone I wanted to spend my life with. Even before you answered me as your partner I already carried the dream of building a future with you. Loving you has never been about counting the cost or measuring the effort. It has always been about choosing you every single day with all that I am.
+                </p>
+
+                <p>
+                    You have changed me in ways I never thought possible. Because of you I strive to be kinder, stronger, and more patient. You taught me to love myself more deeply simply because you love me. And for that I will never take you for granted. Mahal kita sobra, and my only wish is to see you happy. I will do everything I can to make that happen.
+                </p>
+
+                <p>
+                    I study hard not just for myself but for us. Every sacrifice, every effort, every sleepless night is not only for my career but for the life I want to build with you. I want to give you a future where you will never go hungry, never feel abandoned, and never be left to struggle alone. I want to give you the life I never had growing up, a life full of love, security, and joy.
+                </p>
+
+                <p>
+                    I know love is not always easy. There will be quiet days, confusing days, and heavy days. But I promise you this. I will be there not only on the simple days, not only when things are fine, but also when everything feels chaotic. My love for you is not measured by convenience. It is measured by commitment.
+                </p>
+
+                <p>
+                    You are worth fighting for. Even if you show me your worst I will not give up on you. Even if I am imperfect I will keep choosing you, supporting you, and staying by your side. I will not look for what you lack because for me you are more than enough. Sapat na sapat ka para sa akin.
+                </p>
+
+                <p>
+                    I pray to God that He makes us brave enough to love each other through every trial. I pray that in time you will see how genuine my intentions are, how deeply I care, and how much I truly love you.
+                </p>
+
+                <p>
+                    You are my heart, my home, my forever. You are the reason I wake up each day with hope, the reason I push myself harder, the reason I believe in tomorrow. You are the dream I prayed for, the answer I never thought I would receive, the blessing I will spend my life protecting.
+                </p>
+
+                <p>
+                    Every day with you feels like a gift I never deserved but was given anyway. You make the ordinary feel extraordinary and you make the heavy burdens of life feel lighter. When I am tired you give me strength. When I am lost you give me direction. When I doubt myself you remind me that I am enough.
+                </p>
+
+                <p>
+                    I want you to know that I am here. Not only for the good days and laughter, but also for the quiet moments and the tough times. I am here when life feels uncertain, when things get overwhelming, and when you feel like giving up. I won’t let go, I won’t walk away, and I won’t stop loving you.
+                </p>
+
+                <p>
+                    As long as you allow me I will keep choosing you every single day. Mahal na mahal kita, more than words can ever capture, more than I can ever fully explain. And I will spend my life proving that to you.
+                </p>
+
+            </div>
+
+
+            <div class="ending">
+                ♡
+            </div>
+
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================
+         MUSIC
+    ========================= -->
+
+    <audio
+        id="music"
+        loop
+        preload="auto"
+    >
+        <source
+            src="music.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const continueButton =
+            document.getElementById("continueButton");
+
+        const opening =
+            document.getElementById("opening");
+
+        const letterSection =
+            document.getElementById("letterSection");
+
+        const music =
+            document.getElementById("music");
+
+
+        continueButton.addEventListener("click", function () {
+
+            /*
+                The user clicked the button,
+                so mobile browsers allow the music
+                to start playing.
+            */
+
+            music.volume = 1;
+
+            music.play().catch(function (error) {
+
+                console.log(
+                    "Music could not start:",
+                    error
+                );
+
+            });
+
+
+            /*
+                Hide opening
+            */
+
+            opening.classList.add("hide");
+
+
+            /*
+                Show letter
+            */
+
+            setTimeout(function () {
+
+                letterSection.classList.add("show");
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }, 400);
+
+        });
+
+    </script>
+
+</body>
+</html>
